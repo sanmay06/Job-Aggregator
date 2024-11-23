@@ -2,11 +2,11 @@
   "name": "job-scraper",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://127.0.0.1:5000/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.7.7",
     "framer-motion": "^11.11.17",
     "job-scraper": "file:",
     "js-cookie": "^3.0.5",

@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
+import api from '../API';
 
 function Home() {
     const [test, setTest] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch("/test")
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`HTTP error! status: ${res.status}`);
-                }
-                return res.json();
+        api.get('/test')
+            .then(response => {
+                setTest(response.data);
             })
-            .then(data => {
-                console.log("Fetched data:", data);
-                setTest(data);
-            })
-            .catch(err => console.error("Error fetching data:", err));
+            .catch(err => {
+                console.error('Error fetching data:', err);
+                setError(err.message);
+            });
     }, []);
+
+    if (error) {
+        return <h1>Error: {error}</h1>;
+    }
 
     return (
         <div>
-            {test === null ? ( 
+            {test === null ? (
                 <h1>Loading...</h1>
             ) : (
-                test.message.map((member, i) => ( 
-                    <p key={i}>{member}</p>
-                ))
+                test.message.map((member, index) => <p key={index}>{member}</p>)
             )}
         </div>
     );
