@@ -12,19 +12,20 @@ function Login() {
         navigate("/home");
     }*/
 
-    function SignUp(event) {
-        event.preventDefault();
-        navigate("/Sign In");
-    }
-
-    function SignIn(event){
+    async function SignIn(event){
         event.preventDefault();
         const formdata = new FormData(ref.current);
         const data = Object.fromEntries(formdata);
-        //Add backend to check the login credentials
+        /*const response = await fetch("/login",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ username, password }),
+            });
         if(data.staySigned)
             login(data.username);
-            console.log(data.staySigned);
+            console.log(data.staySigned); */
     }
 
     return (
@@ -36,7 +37,7 @@ function Login() {
             <input type='checkbox' name="staySigned" />Stay Signed in<br />
             <button type="submit" value={"Sign In"} >Sing In</button><br />
             <hr/> or<br />
-            <button onClick={SignUp} >Sign Up</button>
+            <button onClick={(event) => { event.preventDefault(); navigate("/Sign In")}} >Sign Up</button>
         </form>
     );
 }
