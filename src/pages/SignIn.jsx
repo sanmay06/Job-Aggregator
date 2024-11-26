@@ -20,7 +20,8 @@ function SignIn() {
     },[conpass])
 
     return (
-        <form ref={ref} onSubmit={SignUp} >
+        <section >
+            <form ref={ref} onSubmit={SignUp} >
             Enter Email:<br />
             <input type = 'email' name="email" required/><br />
             Enter the username:<br />
@@ -32,6 +33,7 @@ function SignIn() {
             {correct && (<h6>password and confirm password should be same</h6>)}
             <button >Submit</button>
         </form>
+        </section>
     )
 }
 
