@@ -1,41 +1,44 @@
 import React, { useState } from "react";
 import { useAuth } from "../Authorize";
 import { useNavigate } from "react-router-dom";
-import api from "../API"
+import './styles.css';
 
 function Login() {
-    const { login, user} = useAuth();
+    const { login, user } = useAuth();
     const navigate = useNavigate();
-    const [msg, setmsg] = useState(null);
-    const [ error, setError] = useState();
+    const [msg, setMsg] = useState(null);
 
-    /*if(user != null){
-        console.log("redirecting");
-        navigate("/home");
-    }*/
-
-    async function SignIn(event){
+    async function SignIn(event) {
         event.preventDefault();
-        /*const username = event.target.username.value;git
-        const pass = event.target.password.value;
-        api.post("/login",{"username": username, "password": pass})
-        .then(respone=>
-                setmsg(respone.data.message)
-        ).catch(e=> console.log(e))*/
     }
 
     return (
-        <form onSubmit={SignIn}>
-            Username:
-            <input type="text" name="username" required/><br/>
-            Password:
-            <input type="password" name="password" required/><br/>
-            <input type='checkbox' name="staySigned" />Stay Signed in<br />
-            <button type="submit" value={"Sign In"} >Sign In nigga</button><br />
-            <div>{msg}</div>
-            <hr/> or<br />
-            <button onClick={(event) => { event.preventDefault(); navigate("/Sign In")}} >Sign Up</button>
-        </form>
+        <div className="center-container">
+            <form className="card" onSubmit={SignIn}>
+                <h1>Login</h1>
+                <label>Username:</label>
+                <input type="text" name="username" required />
+                <label>Password:</label>
+                <input type="password" name="password" required />
+                <div>
+                    <label>Stay Signed in</label>
+                </div>
+                <button type="submit">Sign In</button>
+                <div className="message">{msg}</div>
+                <hr />
+                <button
+                    type="button"
+                    onClick={() => navigate("/Sign In")}
+                    style={{
+                        backgroundColor: "#ddd",
+                        color: "#333",
+                        marginTop: "10px",
+                    }}
+                >
+                    Sign Up
+                </button>
+            </form>
+        </div>
     );
 }
 
