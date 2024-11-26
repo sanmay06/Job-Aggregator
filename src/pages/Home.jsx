@@ -5,7 +5,7 @@ function Home() {
     const [test, setTest] = useState(null);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
+    /*useEffect(() => {
         api.get('/test')
             .then(response => {
                 setTest(response.data);
@@ -19,7 +19,7 @@ function Home() {
     if (error) {
         return <h1>Error: {error}</h1>;
     }
-
+    */
     return (
         <div>
             {test === null ? (

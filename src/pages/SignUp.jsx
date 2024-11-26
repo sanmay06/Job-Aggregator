@@ -8,10 +8,12 @@ function SignIn() {
     const[ pass, setpass ] = useState("");
     const[ conpass, setconpass ] = useState("");
     const [ correct, setcorr ] = useState(false);
+    const [ msg, setmsg ] = useState("");
 
     async function SignUp(event) {  
         event.preventDefault();
-        await api.post("/register", { 'email':event.target.email.value, 'username': event.target.username.value, 'password': event.target.password.value } )
+        /*await api.post("/register", { 'email':event.target.email.value, 'username': event.target.username.value, 'password': event.target.password.value } )
+        .then(response => setmsg(response.data.message).cath(e => console.log(e)) )*/
         
     }
 
@@ -36,6 +38,7 @@ function SignIn() {
             {correct && (<h6>password and confirm password should be same</h6>)}
             <button onSubmit={SignUp}>Submit</button>
         </form>
+        <div>{msg}</div>
         </section>
     )
 }
