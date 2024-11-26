@@ -20,7 +20,7 @@ function Login() {
                 <input type="text" name="username" required />
                 <label>Password:</label>
                 <input type="password" name="password" required />
-                <div>
+                <div hidden>
                     <label>Stay Signed in</label>
                 </div>
                 <button type="submit">Sign In</button>
