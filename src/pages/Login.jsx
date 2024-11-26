@@ -31,7 +31,7 @@ function Login() {
             Password:
             <input type="password" name="password" required/><br/>
             <input type='checkbox' name="staySigned" />Stay Signed in<br />
-            <button type="submit" value={"Sign In"} >Sing In</button><br />
+            <button type="submit" value={"Sign In"} >Sign In nigga</button><br />
             <div>{msg}</div>
             <hr/> or<br />
             <button onClick={(event) => { event.preventDefault(); navigate("/Sign In")}} >Sign Up</button>
