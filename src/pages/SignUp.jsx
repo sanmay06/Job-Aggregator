@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
 import './styles.css';
+import api from "../API";
 
 function SignIn() {
     const [pass, setPass] = useState("");
     const [conPass, setConPass] = useState("");
     const [error, setError] = useState("");
-    const [msg, setMsg] = useState("");
+    const [msg, setmsg] = useState("");
 
     async function SignUp(event) {
         event.preventDefault();
+        await api.post("/register", { 'email':event.target.email.value, 'username': event.target.username.value, 'password': event.target.password.value } )
+        .then(response => setmsg(response.data.message).cath(e => console.log(e)) )
         if (pass !== conPass) {
-            setError("Passwords do not match");
+            setmsg("Passwords do not match");
         } else {
             setError("");
-            setMsg("Account created successfully!");
+            setmsg("Account created successfully!");
         }
     }
 

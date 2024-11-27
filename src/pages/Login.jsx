@@ -2,14 +2,21 @@ import React, { useState } from "react";
 import { useAuth } from "../Authorize";
 import { useNavigate } from "react-router-dom";
 import './styles.css';
+import api from "../API";
 
 function Login() {
     const { login, user } = useAuth();
     const navigate = useNavigate();
-    const [msg, setMsg] = useState(null);
+    const [msg, setmsg] = useState(null);
 
     async function SignIn(event) {
         event.preventDefault();
+        const username = event.target.username.value;
+        const pass = event.target.password.value;
+        api.post("/login",{"username": username, "password": pass})
+        .then(respone=>
+                setmsg(respone.data.message)
+        ).catch(e=> console.log(e))
     }
 
     return (
