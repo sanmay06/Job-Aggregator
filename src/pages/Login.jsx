@@ -14,8 +14,13 @@ function Login() {
         const username = event.target.username.value;
         const pass = event.target.password.value;
         api.post("/login",{"username": username, "password": pass})
-        .then(respone=>
+        .then(respone=>{
                 setmsg(respone.data.message)
+                if(msg === "success"){
+                    login(username)
+                    navigate('/home', {replace: true});
+                }
+        }
         ).catch(e=> console.log(e))
     }
 

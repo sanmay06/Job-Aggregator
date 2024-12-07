@@ -8,7 +8,7 @@ export const AuthProvider = ({children}) => {
 
     function login(username) {
         setUser(username);
-        Cookies.set('user', username, { expires:10 });
+        Cookies.set('user', username, { expires:Infinity });
     }
 
     const Logout = () => {

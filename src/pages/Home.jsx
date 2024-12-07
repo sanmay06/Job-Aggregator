@@ -47,14 +47,14 @@ function Home() {
                         <td>Link</td>
                         <td>Salary</td>
                     </thead>
-                {jobs.map((p)=>(
+                {/*jobs.map((p)=>(
                     <tr>
                         <td>{p.id}</td>
                         <td>{jobs.title}</td>
                         <td>{jobs.link}</td>
                         <td>{jobs.salary}</td>
                     </tr>
-                ))}
+                ))*/}
                 </table>
             </div>
         </section>
