@@ -11,14 +11,19 @@ function SignIn() {
     async function SignUp(event) {
         event.preventDefault();
         await api.post("/register", { 'email':event.target.email.value, 'username': event.target.username.value, 'password': event.target.password.value } )
-        .then(response => setmsg(response.data.message).cath(e => console.log(e)) )
-        if (pass !== conPass) {
-            setmsg("Passwords do not match");
-        } else {
-            setError("");
-            setmsg("Account created successfully!");
-        }
+        .then(response => setmsg(response.data.message)).catch(e => console.log(e)) 
+        setError("");
+        setmsg("Account created successfully!");
     }
+    
+    useEffect(()=>{
+        if (pass !== conPass)
+            setmsg("password doesnt match");
+        else if(conPass === "")
+            setmsg("");
+        else
+            setmsg("");
+    },[conPass])
 
     return (
         <div className="center-container">
@@ -41,7 +46,7 @@ function SignIn() {
                     type="password"
                     name="confirmPassword"
                     value={conPass}
-                    onChange={(e) => setConPass(e.target.value)}
+                    onChange={(e) => {setConPass(e.target.value)}}
                     required
                 />
                 {error && <p className="error">{error}</p>}

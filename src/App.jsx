@@ -8,7 +8,7 @@ import Error404 from "./pages/ErrorPage";
 function App () {
     const router =createBrowserRouter([
         {
-            path:'/',
+            path:'/login',
             element: <Login />,
             errorElement: <Error404 />,
         },
