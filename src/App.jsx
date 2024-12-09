@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Error404 from "./pages/ErrorPage";
+import Profiles from "./pages/Profiles.jsx";
 
 function App () {
     const router =createBrowserRouter([
@@ -19,6 +20,10 @@ function App () {
         {
             path:'/Sign In',
             element: <SignUp />
+        },
+        {
+            path:'/home/profile/:id',
+            element:<Profiles />
         }
     ])
     return <>

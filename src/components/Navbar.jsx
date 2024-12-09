@@ -30,7 +30,7 @@ function NavBar() {
                         </li>
                     ))}
                     <li>
-                        <button>+</button>
+                        <button >+</button>
                     </li>
                 </ul>
                 <ul className="navbar-links">

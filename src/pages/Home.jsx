@@ -6,7 +6,6 @@ import NavBar from '../components/Navbar';
 function Home() {
     const [status, setStatus] = useState(null);
     const [error, setError] = useState(null);
-    const [columns, setColumns] = useState([]);
     const [jobs, setjobs] = useState([{}]);
 
     useEffect(() => {
@@ -20,15 +19,6 @@ function Home() {
                 setError(err.message);
             });
     }, []);
-
-    function update(s) {
-        if (columns.includes(s)) {
-            setColumns(prev => prev.filter(item => item !== s));
-        } else {
-            setColumns(prev => [...prev, s]);
-        }
-        console.log(columns);
-    }
 
     /*if (error) {
         return <h1>Error: {error}</h1>;
