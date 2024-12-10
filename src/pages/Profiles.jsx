@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import NavBar from '../components/Navbar';
+import api from '../API';
+import { useAuth } from '../Authorize';
 
 function Profiles() {
     const params = useParams();
     const [sites, setsites] = useState([]);
+    const [msg, setmsg] = useState("");
+    const [name, setname] = useState("");
+    const [site, setsite] = useState("");
     const [columns, setColumns] = useState([]);
-    console.log(params);
+    const [web, setweb] = useState(true);
+    console.log(params.id);
+    const { user } = useAuth(); 
 
     function sitesDeal(site) {
         if(sites.includes(site))
@@ -14,6 +21,30 @@ function Profiles() {
         else
             setsites((prev)=>[...prev,site]);
     }
+
+    useEffect(() => {
+      api.get(`/profile/${params.id}?user=${user}`)
+      .then( (response)=>{
+        console.log(response.data)
+        if(response.data.msg==="found"){
+            const profile_data = response.data.profile_data;
+            setColumns(profile_data.column)
+            setname(profile_data.name)
+            setsite(profile_data.search)
+            setsites(profile_data.sites)
+        }
+      }).catch(e=>console.log(e))
+    }, []);
+
+    useEffect(() => {
+        if(sites.length >= 2)
+            setweb(false);
+        else{
+            setweb(true);
+            if(columns.includes('website'))
+                update("website")
+        }
+    }, [sites]);
 
     function update(s) {
         if (columns.includes(s)) {
@@ -24,12 +55,20 @@ function Profiles() {
         console.log(columns);
     }
 
+    function submit(e) {
+        e.preventDefault();
+        api.post(`/profile/${params}`, {'name':name,'search':site, 'sites': sites, 'columns': columns,'user':user})
+        .then((response) => setmsg(response.data.msg)).catch((e)=>console.log(e))
+    }
+
     return (
         <section>
             <NavBar />
-            <form>
+            <form  onSubmit={(e)=>submit(e)} >
+                Enter the name for the profile:
+                <input type='text' name='name' value={name} onChange={(e)=> setname(e.target.value)} required/><br/>
                 Enter the field you are searching for:
-                <input type='text' required/><br />
+                <input type='text' name='search' value={site} onChange={(e) => setsite(e.target.value)} required/><br />
                 Enter the sites you want to search in:
                 <input type='text' value={sites}readOnly />
                 <button onClick={(e) => {e.preventDefault();  sitesDeal('internshaala')}} >internshaala</button>
@@ -42,7 +81,9 @@ function Profiles() {
                 <button onClick={(e) => {e.preventDefault();  update('Company')}} >Company</button>
                 <button onClick={(e) => {e.preventDefault();  update('Salary')}} >Salary</button>
                 <button onClick={(e) => {e.preventDefault();  update('Location')}} >Location</button>
-                
+                <button onClick={(e) => {e.preventDefault();  update('website')}} hidden={web}>Website</button>
+                <input type ='submit' value={"Submit"}/>
+                <div>{msg}</div>
             </form>
         </section>
     )

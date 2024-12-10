@@ -2,17 +2,21 @@ import React, { useState, useEffect } from "react";
 import "./styles.css";
 import { useAuth } from "../Authorize";
 import api from "../API";
+import { Link } from "react-router-dom";
 
 function NavBar() {
     const { Logout, user } = useAuth();
     const [profiles, setProfiles] = useState([""]);
+    var name 
 
     useEffect(() => {
         api
             .get(`/profile?user=${user}`)
             .then((response) => {
                 setProfiles(response.data);
-                console.log("Profiles fetched:", response.data);
+                const length = profiles.length;
+                name = 'profiles'+length
+                //console.log("Profiles fetched:", response.data);
             })
             .catch((error) => {
                 console.error("Error fetching profiles:", error);
@@ -26,11 +30,11 @@ function NavBar() {
                     {profiles.map((profile, index) => (
                         <li key={index}>
                             <button>{profile}</button>
-                            <button></button>
+                            <Link to={`/home/profile/${profile}`}><button></button></Link>
                         </li>
                     ))}
                     <li>
-                        <button >+</button>
+                        <Link to={`/home/profile/${name}`}><button>+</button></Link>
                     </li>
                 </ul>
                 <ul className="navbar-links">
