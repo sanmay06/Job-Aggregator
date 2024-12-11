@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import NavBar from '../components/Navbar';
 import api from '../API';
 import { useAuth } from '../Authorize';
+import PriceSlider from '../components/Slider';
 
 function Profiles() {
     const params = useParams();
@@ -11,6 +12,8 @@ function Profiles() {
     const [name, setname] = useState("");
     const [site, setsite] = useState("");
     const [columns, setColumns] = useState([]);
+    const [min, setmin] = useState();
+    const [max, setmax] = useState();
     const [web, setweb] = useState(true);
     console.log(params.id);
     const { user } = useAuth(); 
@@ -57,16 +60,16 @@ function Profiles() {
 
     function submit(e) {
         e.preventDefault();
-        api.post(`/profile/${params}`, {'name':name,'search':site, 'sites': sites, 'columns': columns,'user':user})
+        api.post(`/profile/${params}`, {'name':name,'search':site, 'sites': sites, 'columns': columns,'user':user,'min':min,'max':max})
         .then((response) => setmsg(response.data.msg)).catch((e)=>console.log(e))
     }
 
     return (
         <section>
-            <NavBar />
+            <NavBar home={false}/>
             <form  onSubmit={(e)=>submit(e)} >
                 Enter the name for the profile:
-                <input type='text' name='name' value={name} onChange={(e)=> setname(e.target.value)} required/><br/>
+                <input type='text' name='name' value={name} onChange={(e)=> setname(e.target.value)  } required/><br/>
                 Enter the field you are searching for:
                 <input type='text' name='search' value={site} onChange={(e) => setsite(e.target.value)} required/><br />
                 Enter the sites you want to search in:
@@ -82,6 +85,7 @@ function Profiles() {
                 <button onClick={(e) => {e.preventDefault();  update('Salary')}} >Salary</button>
                 <button onClick={(e) => {e.preventDefault();  update('Location')}} >Location</button>
                 <button onClick={(e) => {e.preventDefault();  update('website')}} hidden={web}>Website</button>
+                <PriceSlider min = {setmin} max = {setmax}/>
                 <input type ='submit' value={"Submit"}/>
                 <div>{msg}</div>
             </form>

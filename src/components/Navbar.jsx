@@ -4,19 +4,15 @@ import { useAuth } from "../Authorize";
 import api from "../API";
 import { Link } from "react-router-dom";
 
-function NavBar() {
+function NavBar(props) {
     const { Logout, user } = useAuth();
     const [profiles, setProfiles] = useState([""]);
-    var name 
-
+    
     useEffect(() => {
         api
             .get(`/profile?user=${user}`)
             .then((response) => {
                 setProfiles(response.data);
-                const length = profiles.length;
-                name = 'profiles'+length
-                //console.log("Profiles fetched:", response.data);
             })
             .catch((error) => {
                 console.error("Error fetching profiles:", error);
@@ -29,17 +25,17 @@ function NavBar() {
                 <ul className="profiles">
                     {profiles.map((profile, index) => (
                         <li key={index}>
-                            <button>{profile}</button>
+                            <Link to={`/home/${profile}`}><button>{profile}</button></Link>
                             <Link to={`/home/profile/${profile}`}><button></button></Link>
                         </li>
                     ))}
                     <li>
-                        <Link to={`/home/profile/${name}`}><button>+</button></Link>
+                        <Link to={`/home/profile/createNew`}><button>+</button></Link>
                     </li>
                 </ul>
                 <ul className="navbar-links">
                     <li>
-                        <a href="/home">Home</a>
+                        <a href="/home" hidden={props.home}>Home</a>
                     </li>
                     <li>
                         <a href="/login" onClick={Logout}>

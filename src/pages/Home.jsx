@@ -1,52 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import './styles.css';
-import api from '../API';
-import NavBar from '../components/Navbar';
+import React, { useEffect, useState } from "react";
+import "./styles.css";
+import NavBar from "../components/Navbar";
+import Table from "../components/Table";
+import { useParams } from "react-router-dom";
+import { useAuth } from "../Authorize";
+import api from "../API";
 
 function Home() {
-    const [status, setStatus] = useState(null);
-    const [error, setError] = useState(null);
-    const [jobs, setjobs] = useState([{}]);
+    const { user } = useAuth();
+    const [id, setId] = useState(null);
+    const param = useParams();
+    const [profiles, setProfiles] = useState();
 
     useEffect(() => {
-        api.get('/home')
-            .then(response => {
-                setjobs(response.data.jobs);
-                setStatus(response.data.msg);
-            })
-            .catch(err => {
-                console.error('Error fetching data:', err);
-                setError(err.message);
-            });
+        if (param.id) {
+            setId(param.id);
+        } else {
+            api.get(`/profile?user=${user}`)
+                .then((response) => {
+                    setProfiles(response.data || []);
+                    if (response.data && response.data.length > 0) {
+                        setId(response.data[0]);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error fetching profiles:", error);
+                });
+        }
     }, []);
 
-    /*if (error) {
-        return <h1>Error: {error}</h1>;
-    }*/
+    useEffect(() => {
+        //console.log(id);
+    }, [id]);
 
     return (
         <section>
-            <NavBar />
-            <div className="center-container">
-
-
-                <table>
-                    <thead>
-                        <td>S.No</td>
-                        <td>Job Title</td>
-                        <td>Link</td>
-                        <td>Salary</td>
-                    </thead>
-                {/*jobs.map((p)=>(
-                    <tr>
-                        <td>{p.id}</td>
-                        <td>{jobs.title}</td>
-                        <td>{jobs.link}</td>
-                        <td>{jobs.salary}</td>
-                    </tr>
-                ))*/}
-                </table>
-            </div>
+            <NavBar home={true}/>
+            {profiles && profiles.length === 0 ? (
+                <p>No profiles found. Try creating a new one.</p>
+            ) : (
+                <Table profile={id} />
+            )}
         </section>
     );
 }

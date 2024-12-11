@@ -18,6 +18,10 @@ function App () {
             element: <Home />
         },
         {
+            path:'/home/:id',
+            element: <Home />
+        },
+        {
             path:'/Sign In',
             element: <SignUp />
         },
