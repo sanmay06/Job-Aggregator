@@ -13,7 +13,7 @@ function Table(props) {
     const [jobs, setjobs] = useState([{}]);
     const [status, setstatus] = useState(false);
 
-    console.log(props.profile);
+    //console.log(props.profile);
 
     useEffect(() => {
         if(props.profile){
@@ -28,8 +28,7 @@ function Table(props) {
             api.get(`/home/${props.profile}?user=${user}`)
             .then((response) => {
                 setjobs(response.data);
-            });
-            setstatus(true);
+            }).catch(e=>console.log(e));
         }
     }, [props.profile]);
 
@@ -41,6 +40,7 @@ function Table(props) {
             setlocation(col.includes("Location"));
             setwebsite(col.includes("Website"));
         }
+        setstatus(true);
     }, [col]);
 
     // Print function

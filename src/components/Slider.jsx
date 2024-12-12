@@ -2,16 +2,25 @@ import React, { useState, useEffect } from "react";
 import { Slider, Box, Typography } from "@mui/material";
 
 const PriceSlider = (props) => {
-  const [priceRange, setPriceRange] = useState([0, 500]); // Default range
+  const { minval, maxval, min, max } = props;
 
-    useEffect(() => {
-      props.max(priceRange[1]);
-      props.min(priceRange[0]);
-    }, [priceRange]);
+  // Set initial priceRange using minval and maxval from props
+  const [priceRange, setPriceRange] = useState([minval, maxval]);
 
-  // Handle slider change
+  // Effect to update parent component whenever priceRange changes
+  useEffect(() => {
+    min(priceRange[0]);
+    max(priceRange[1]);
+  }, [priceRange]);
+
+  // Sync priceRange state when minval or maxval props change
+  useEffect(() => {
+    setPriceRange([minval, maxval]);
+  }, [minval, maxval]);
+
+  // Handle slider value changes
   const handleChange = (event, newValue) => {
-    setPriceRange(newValue);
+    setPriceRange(newValue); 
   };
 
   return (
@@ -23,9 +32,9 @@ const PriceSlider = (props) => {
         value={priceRange}
         onChange={handleChange}
         valueLabelDisplay="auto"
-        min={0}
-        max={100000}
-        step={100} 
+        min={0} 
+        max={10000} 
+        step={100}
       />
       <Typography variant="body1">
         Selected Range: ₹{priceRange[0]} - ₹{priceRange[1]} / month

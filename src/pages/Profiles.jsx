@@ -14,8 +14,9 @@ function Profiles() {
     const [columns, setColumns] = useState([]);
     const [min, setmin] = useState();
     const [max, setmax] = useState();
+    const [location, setlocation] = useState(null);
     const [web, setweb] = useState(true);
-    console.log(params.id);
+    //console.log(params.id);
     const { user } = useAuth(); 
 
     function sitesDeal(site) {
@@ -35,6 +36,11 @@ function Profiles() {
             setname(profile_data.name)
             setsite(profile_data.search)
             setsites(profile_data.sites)
+            setlocation(profile_data.location)
+            //console.log(typeof(profile_data.max))
+            setmax((profile_data.max))
+            setmin((profile_data.min))
+            //console.log(min,max)
         }
       }).catch(e=>console.log(e))
     }, []);
@@ -60,7 +66,7 @@ function Profiles() {
 
     function submit(e) {
         e.preventDefault();
-        api.post(`/profile/${params}`, {'name':name,'search':site, 'sites': sites, 'columns': columns,'user':user,'min':min,'max':max})
+        api.post(`/profile/${params}`, {'name':name,'search':site, 'sites': sites, 'columns': columns,'user':user,'min':min,'max':max,'location':location})
         .then((response) => setmsg(response.data.msg)).catch((e)=>console.log(e))
     }
 
@@ -74,9 +80,10 @@ function Profiles() {
                 <input type='text' name='search' value={site} onChange={(e) => setsite(e.target.value)} required/><br />
                 Enter the sites you want to search in:
                 <input type='text' value={sites}readOnly />
-                <button onClick={(e) => {e.preventDefault();  sitesDeal('internshaala')}} >internshaala</button>
-                <button onClick={(e) => {e.preventDefault();  sitesDeal('LinkedIn')}} >LinkedIn</button>
-                <button >someother</button>
+                <button onClick={(e) => {e.preventDefault();  sitesDeal('Internshala')}} >internshaala</button>
+                <button onClick={(e) => {e.preventDefault();  sitesDeal('Adzuna')}} >Adzuna</button>                
+                <button onClick={(e) => {e.preventDefault();  sitesDeal('TimesJobs')}} >Times job</button>
+                <button onClick={(e) => {e.preventDefault();  sitesDeal('JobRapido')}} >Job Rapido</button>
                 <br/>
                 Enter the fields to display:
                 <input type='text' value={columns}readOnly />
@@ -85,7 +92,9 @@ function Profiles() {
                 <button onClick={(e) => {e.preventDefault();  update('Salary')}} >Salary</button>
                 <button onClick={(e) => {e.preventDefault();  update('Location')}} >Location</button>
                 <button onClick={(e) => {e.preventDefault();  update('website')}} hidden={web}>Website</button>
-                <PriceSlider min = {setmin} max = {setmax}/>
+                <PriceSlider min = {setmin} max = {setmax} minval={min} maxval={max}/>
+                Enter the location to search:
+                <input type="button" value={location} onChange={(e)=> setlocation(e.target.value)} />
                 <input type ='submit' value={"Submit"}/>
                 <div>{msg}</div>
             </form>
