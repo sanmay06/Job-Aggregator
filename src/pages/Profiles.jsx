@@ -14,7 +14,7 @@ function Profiles() {
     const [columns, setColumns] = useState([]);
     const [min, setmin] = useState();
     const [max, setmax] = useState();
-    const [location, setlocation] = useState(null);
+    const [location, setlocation] = useState("");
     const [web, setweb] = useState(true);
     //console.log(params.id);
     const { user } = useAuth(); 
@@ -94,7 +94,7 @@ function Profiles() {
                 <button onClick={(e) => {e.preventDefault();  update('website')}} hidden={web}>Website</button>
                 <PriceSlider min = {setmin} max = {setmax} minval={min} maxval={max}/>
                 Enter the location to search:
-                <input type="button" value={location} onChange={(e)=> setlocation(e.target.value)} />
+                <input type="text" value={location} onChange={(e)=> setlocation(e.target.value)} />
                 <input type ='submit' value={"Submit"}/>
                 <div>{msg}</div>
             </form>

@@ -13,6 +13,7 @@ function Table(props) {
     const [jobs, setjobs] = useState([{}]);
     const [status, setstatus] = useState(false);
     const [order, setorder] = useState("none");
+    const [msg, setmsg] = useState(null);
 
     //console.log(props.profile);
 
@@ -43,6 +44,8 @@ function Table(props) {
             api.get(`/home/${props.profile}?user=${user}`)
             .then((response) => {
                 setjobs(response.data);
+                setstatus(true);
+                setmsg(response.data.message);
             }).catch(e=>console.log(e));
         }
     }, [props.profile]);
@@ -54,7 +57,6 @@ function Table(props) {
             setsalary(col.includes("Salary"));
             setlocation(col.includes("Location"));
             setwebsite(col.includes("Website"));
-            setstatus(true);
         }
     }, [col]);
 
@@ -83,6 +85,7 @@ function Table(props) {
     return (
         <div className="center-container">
             <h1 hidden={status}>Loading....</h1>
+            <h3>{msg}</h3>
             <form>
                 <input
                     type="checkbox"
