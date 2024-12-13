@@ -12,8 +12,23 @@ function Table(props) {
     const [website, setwebsite] = useState(false);
     const [jobs, setjobs] = useState([{}]);
     const [status, setstatus] = useState(false);
+    const [order, setorder] = useState("none");
 
     //console.log(props.profile);
+
+    function ordering(o){
+        if(o === "i")
+            setorder("i")
+        else if(o === "d")
+            setorder("d")
+    }
+
+    useEffect(() => {
+        if(order === "i")
+            jobs.sort((a,b) => a.salary - b.salary);
+        else if(order == "d")
+            jobs.sort((a,b) => b.salary - a.salary);
+    }, [order]);
 
     useEffect(() => {
         if(props.profile){
@@ -39,8 +54,8 @@ function Table(props) {
             setsalary(col.includes("Salary"));
             setlocation(col.includes("Location"));
             setwebsite(col.includes("Website"));
+            setstatus(true);
         }
-        setstatus(true);
     }, [col]);
 
     // Print function
@@ -103,6 +118,11 @@ function Table(props) {
                 </p>
             </form>
             <button onClick={printTable}>Print Table</button>
+            <form >
+                <button onClick={(e)=>{e.preventDefault(); ordering("i")}}>increasing</button>
+                <button onClick={(e)=>{e.preventDefault(); ordering("d")}}>decreasing</button>
+                {/* put one image or svg */}
+            </form>
             <table>
                 <thead>
                     <tr>
