@@ -73,6 +73,8 @@ function Profiles() {
     return (
         <section>
             <NavBar home={false}/>
+        <section className='profiles-regandedit'>
+            
             <form  onSubmit={(e)=>submit(e)} >
                 Enter the name for the profile:
                 <input type='text' name='name' value={name} onChange={(e)=> setname(e.target.value)  } required/><br/>
@@ -98,6 +100,7 @@ function Profiles() {
                 <input type ='submit' value={"Submit"}/>
                 <div>{msg}</div>
             </form>
+        </section>
         </section>
     )
 }

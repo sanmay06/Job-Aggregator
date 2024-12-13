@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 
 function Error404() {
     return(
-        <section>
-            < Link to = "/home">Home</Link>
+        <section className="error">
+            there was some error in link
+            < Link to = "/">Login</Link>
         </section>
     );
 }

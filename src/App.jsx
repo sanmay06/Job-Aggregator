@@ -9,7 +9,7 @@ import Profiles from "./pages/Profiles.jsx";
 function App () {
     const router =createBrowserRouter([
         {
-            path:'/login',
+            path:'/',
             element: <Login />,
             errorElement: <Error404 />,
         },

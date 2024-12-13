@@ -11,6 +11,10 @@ function Home() {
     const [id, setId] = useState(null);
     const param = useParams();
     const [profiles, setProfiles] = useState();
+    
+    useEffect(() => {
+      document.title = "home";
+    }, []);
 
     useEffect(() => {
         if (param.id) {

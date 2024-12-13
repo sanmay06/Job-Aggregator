@@ -26,7 +26,7 @@ function NavBar(props) {
                     {profiles.map((profile, index) => (
                         <li key={index}>
                             <Link to={`/home/${profile}`}><button>{profile}</button></Link>
-                            <Link to={`/home/profile/${profile}`}><button></button></Link>
+                            <Link to={`/home/profile/${profile}`}><button className="edit">-</button></Link>
                         </li>
                     ))}
                     <li>

@@ -26,8 +26,8 @@ function SignIn() {
     },[conPass])
 
     return (
-        <div className="center-container">
-            <form className="card" onSubmit={SignUp}>
+        <div className="reg-center-container">
+            <form className="reg-card" onSubmit={SignUp}>
                 <h1>Sign Up</h1>
                 <label>Email:</label>
                 <input type="email" name="email" required />

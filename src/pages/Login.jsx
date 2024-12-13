@@ -25,8 +25,8 @@ function Login() {
     }
 
     return (
-        <div className="center-container">
-            <form className="card" onSubmit={SignIn}>
+        <div className="login-container">
+            <form className="login-card" onSubmit={SignIn}>
                 <h1>Login</h1>
                 <label>Username:</label>
                 <input type="text" name="username" required />
